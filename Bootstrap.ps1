@@ -75,9 +75,8 @@ cinst git.install -y
 
 #----------------------- PowerLine prompt ---------------------------------------------
 
-# $SourceDir = $(Join-Path -Path $env:USERPROFILE -ChildPath "\Projects\PSDotFiles\")
+$SourceDir = $(Join-Path -Path $env:USERPROFILE -ChildPath "\Projects\PSDotFiles\")
 
-$SourceDir = "c:\Users\rootik\Projects\PSDotFiles"
 
 if (Test-Path $SourceDir\WindowsPowerShell\Themes\powerline) {
   Remove-Item -Recurse -Force $SourceDir\WindowsPowerShell\Themes\powerline
