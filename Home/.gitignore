@@ -1,15 +1,27 @@
-### Windows ###
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# Useful `.gitignore` templates:
+# https://github.com/github/gitignore
 
-# Folder config file
-Desktop.ini
+# ----------------------------------------------------------------------
+# | Linux                                                              |
+# ----------------------------------------------------------------------
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+*~
 
-### OSX ###
+# ----------------------------------------------------------------------
+# | Miscellaneous                                                      |
+# ----------------------------------------------------------------------
+
+# Node.js & npm.
+
+node_modules
+npm-debug.log
+
+
+# ----------------------------------------------------------------------
+# | macOS                                                              |
+# ----------------------------------------------------------------------
+
+._*
 .AppleDouble
 .DS_Store
 .localized
@@ -19,16 +31,30 @@ $RECYCLE.BIN/
 Icon
 
 
-# Thumbnails
-._*
+# ----------------------------------------------------------------------
+# | Vim                                                                |
+# ----------------------------------------------------------------------
 
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
+%*
+*.sw[a-z]
+*.un~
+.netrwhist
+Session.vim
 
+
+# ----------------------------------------------------------------------
+# | Windows                                                            |
+# ----------------------------------------------------------------------
+
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# ----------------------------------------------------------------------
 # Shhh. The Extra file is a secret
+
 .extra
-
-### Linux ###
-
-*~
