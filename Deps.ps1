@@ -21,8 +21,9 @@ RequireAdmin
 Get-PackageProvider NuGet -Force
 
 # Chocolatey Provider is not ready yet. Use normal Chocolatey
-#Get-PackageProvider Chocolatey -Force
-#Set-PackageSource -Name chocolatey -Trusted
+Get-PackageProvider Chocolatey -Force
+Set-PackageSource -Name chocolatey -Trusted
+Install-PackageProvider -Name ChocolateyGet
 
 ###############################################################################
 ### Chocolatey                                                                #
@@ -33,6 +34,9 @@ cd $env:USERPROFILE
 
 if ((which cinst) -eq $null) {
     iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+
+if (which cinst) {
     Refresh-Environment
     choco feature enable -n=allowGlobalConfirmation
 }
@@ -120,6 +124,7 @@ cinst adobereader
 #------------------------------------------------------------------------------
 cinst far
 cinst bginfo
+cinst powershell-core
 
 # Other
 #------------------------------------------------------------------------------
@@ -193,6 +198,19 @@ if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((which git) 
 #}
 
 
+#----------------------- Atom --------------------------------------------------
+
+cinst atom -y
+
+$Packages = Get-Content $(Join-Path -Path $SourceDir -ChildPath "Home\.atom\package.list")
+foreach ($Pack in $Packages) { apm install $Pack }
+
+#----------------------- Windows Terminal --------------------------------------------------
+
+cinst microsoft-windows-terminal -y
+
+cinst vswhere -y
+
 ###############################################################################
 ### Visual Studio Plugins                                                     #
 ###############################################################################
@@ -224,9 +242,16 @@ if (which Install-VSExtension) {
     # https://marketplace.visualstudio.com/items?itemName=AdamRDriscoll.PowerShellToolsforVisualStudio2017-18561
     Install-VSExtension "https://visualstudiogallery.msdn.microsoft.com/8389e80d-9e40-4fc1-907c-a07f7842edf2/file/257196/1/PowerShellTools.15.0.vsix" `
 
+		Install-VSExtension ProductivityPowerPack2017
 }
 
-Install-VSExtension ProductivityPowerPack2017
+
+###############################################################################
+### Windows Subsystem for Linux
+###############################################################################
+
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
 
 # Wait for key press
 Function WaitForKey {

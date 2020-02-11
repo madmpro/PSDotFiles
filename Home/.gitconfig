@@ -44,6 +44,7 @@
     whitespace = warn
 
 [core]
+    abbrev = 12
     # Use custom `.gitignore` and `.gitattributes`
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
@@ -57,6 +58,7 @@
     # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
     trustctime = false
 
+	editor = \"C:\\Users\\rootik\\AppData\\Local\\atom\\app-1.42.0\\atom.exe\" --wait
 [color]
     # Use colors in Git commands that are capable of colored output when
     # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
@@ -75,9 +77,36 @@
     changed = green
     untracked = cyan
     branch = magenta
+[filter "lfs"]
+  	clean = git-lfs clean -- %f
+  	smudge = git-lfs smudge -- %f
+  	process = git-lfs filter-process
+  	required = true
+[include]
+
+    # Load local configs.
+    # https://git-scm.com/docs/git-config#_includes
+    #
+    # [!] The following needs to remain at the end of this file in
+    #     order to allow any of the above configs to be overwritten
+    #     by the local ones
+
+    path = ~/.gitconfig.local
+
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
+
+[pretty]
+
+    custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
+    #                     │        │            │            │             └─ author name
+    #                     │        │            │            └─ message
+    #                     │        │            └─ date (relative)
+    #                     │        └─ decorations (branch, heads or tags)
+    #                     └─ hash (abbreviated)
+
+
 
 # URL shorthands
 [url "git@github.com:"]
@@ -95,3 +124,6 @@
 
 [push]
     default = simple
+[user]
+	name = Igor Frunze User
+	email = madm.pro@gmail.com
