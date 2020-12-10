@@ -1,5 +1,14 @@
 # https://github.com/neilpa/cmd-colors-solarized
 
+#------------------------------------------------------------------------------
+# Functions are imported only if Solarized theme is installed
+#------------------------------------------------------------------------------
+
+$ProfileDir = Split-Path -parent $Profile
+$ThemeDir = $(Join-Path -Path $ProfileDir -ChildPath "Themes\Solarized")
+
+if ( -not ( $ThemeDir ) ) { return; }
+
 Function Update-Link
 {
     param(
@@ -12,7 +21,7 @@ Function Update-Link
       [string]$Theme = 'Dark'
   )
 
-  $lnk = & ("$PSScriptRoot\Get-Link.ps1") $Path
+  $lnk = & ("$ThemeDir\Get-Link.ps1") $Path
 
   # Set Common Solarized Colors
   $lnk.ConsoleColors[0]="#002b36"

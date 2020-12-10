@@ -97,14 +97,14 @@ if (Test-Path $SourceDir\WindowsPowerShell\Themes\powerline) {
   Remove-Item -Recurse -Force $SourceDir\WindowsPowerShell\Themes\powerline
 }
 
-git clone https://github.com/powerline/fonts.git $(Join-Path -Path $SourceDir -ChildPath "WindowsPowerShell\Themes\powerline")
+# git clone https://github.com/powerline/fonts.git $(Join-Path -Path $SourceDir -ChildPath "WindowsPowerShell\Themes\powerline")
 
 . $(Join-Path -Path $SourceDir -ChildPath "WindowsPowerShell\Themes\powerline\install.ps1")
 
 
 Install-Module Pansies -Scope CurrentUser -AllowClobber
 
-Install-Module PowerLine -Scope CurrentUser -AllowClobber
+Install-Module PowerLine -Scope CurrentUser -AllowClobber -SkipPublisherCheck
 Import-Module PowerLine
 
 Set-Theme agnoster

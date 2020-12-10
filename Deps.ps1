@@ -49,9 +49,9 @@ New-Alias which get-command
 Get-PackageProvider NuGet -Force
 
 # Chocolatey Provider is not ready yet. Use normal Chocolatey
-#Get-PackageProvider Chocolatey -Force
-#Set-PackageSource -Name chocolatey -Trusted
-#Install-PackageProvider -Name ChocolateyGet
+Get-PackageProvider Chocolatey -Force
+Set-PackageSource -Name chocolatey -Trusted
+Install-PackageProvider -Name ChocolateyGet
 
 ###############################################################################
 ### Chocolatey                                                                #
@@ -161,7 +161,7 @@ cinst powershell-core
 
 
 ### Completing PoshGit installation if installing GH4W
-if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((get-command git) -eq $null)) {
+if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((which git) -eq $null)) {
     Write-Host ""
     Write-Host "You have installed GitHub but `git` was not found."
     Write-Host "In case GitHub is newly installed, execution has been"
@@ -281,7 +281,6 @@ if (which Install-VSExtension) {
 
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
-# https://westoahu.hawaii.edu/cyber/how-to-install-kali-linux-as-an-app-in-windows-10/
 
 # Wait for key press
 Function WaitForKey {

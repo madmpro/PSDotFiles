@@ -61,6 +61,21 @@ function Run-AsAdmin {
 
 }
 
+
+Function RequireAdmin {
+	If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
+		If ($PSVersionTable.PSVersion.Major -eq 5) {
+				Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass" -WorkingDirectory $pwd -Verb RunAs
+		}
+		ElseIf ($PSVersionTable.PSVersion.Major -eq 6) {
+				Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File" -WorkingDirectory $pwd -Verb RunAs
+		}
+
+		Exit
+	}
+}
+
+
 function Out-Clipboard {
     [cmdletbinding()]
     param (
