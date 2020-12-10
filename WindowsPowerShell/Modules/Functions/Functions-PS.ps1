@@ -11,6 +11,20 @@ Function RemoteLogin ([string]$RHost){
   Enter-PSSession -ComputerName $RHost -Credential $Cred -Authentication Credssp
 }
 
+
+Function RunPSAsAdmin {
+	If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
+		If ($PSVersionTable.PSVersion.Major -eq 5) {
+				Start-Process powershell.exe "-ExecutionPolicy Bypass" -WorkingDirectory $pwd -Verb RunAs
+		}
+		ElseIf ($PSVersionTable.PSVersion.Major -eq 6) {
+				Start-Process pwsh.exe "-ExecutionPolicy Bypass" -WorkingDirectory $pwd -Verb RunAs
+		}
+
+		Exit
+	}
+}
+
 function Run-AsAdmin {
 
   # Get the ID and security principal of the current user account

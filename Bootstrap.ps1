@@ -15,6 +15,19 @@ Function RequireAdmin {
 	}
 }
 
+Function RestartPowerShell {
+	If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
+		If ($PSVersionTable.PSVersion.Major -eq 5) {
+				Start-Process powershell.exe
+		}
+		ElseIf ($PSVersionTable.PSVersion.Major -eq 6) {
+				Start-Process pwsh.exe
+		}
+
+		Exit
+	}
+}
+
 RequireAdmin
 
 #Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force
@@ -24,8 +37,10 @@ $ProfileDir = Split-Path -parent $profile
 
 #-------------------- WindowsPowerShell --------------------------------------------------
 
-#Remove-Item -Path $ProfileDir -Recurse -Force -ErrorAction SilentlyContinue
+If ($ProfileDir) { Remove-Item -Path $ProfileDir -Recurse -Force -ErrorAction SilentlyContinue }
+
 New-Item -ItemType SymbolicLink -Path $ProfileDir -Target  $(Join-Path -Path $SourceDir -ChildPath "WindowsPowerShell") -Force
+
 
 #----------------------- Home --------------------------------------------------
 
@@ -41,7 +56,7 @@ Get-ChildItem -Path $(Join-Path -Path $SourceDir -ChildPath "Home") | % {
 ## Install Modules
 ################################################################################
 
-Install-PackageProvider NuGet  -Force
+Install-PackageProvider NuGet  -Force -AllowClobber
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 #----------------------- oh-my-posh  -------------------------------------------
@@ -71,7 +86,7 @@ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 #Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 
-cinst git.install -y
+cinst git.install -y --force
 
 #----------------------- PowerLine prompt ---------------------------------------------
 
@@ -115,8 +130,4 @@ Set-WinUserLanguageList -LanguageList en-US, ru -Force
 ## Windows Tweaks
 ################################################################################
 
-
-
-
-
-PowerShell
+RestartPowerShell

@@ -5,8 +5,36 @@ Function RequireAdmin {
 	}
 }
 
+# Reload the $env object from the registry
+function Refresh-Environment {
+    $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
+                 'HKCU:\Environment'
+
+    $locations | ForEach-Object {
+        $k = Get-Item $_
+        $k.GetValueNames() | ForEach-Object {
+            $name  = $_
+            $value = $k.GetValue($_)
+            Set-Item -Path Env:\$name -Value $value
+        }
+    }
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+}
+
+function Install-VSExtension($url) {
+		$vsixInstaller = Join-Path $env:DevEnvDir "VSIXInstaller.exe"
+		Write-Output "Downloading ${url}"
+		$extensionFile = (curlex $url)
+		Write-Output "Installing $($extensionFile.Name)"
+		$result = Start-Process -FilePath `"$vsixInstaller`" -ArgumentList "/q $($extensionFile.FullName)" -Wait -PassThru;
+}
+
+
 RequireAdmin
 
+
+New-Alias which get-command
 
 ###############################################################################
 ### Update Help for Modules                                                   #
@@ -21,9 +49,9 @@ RequireAdmin
 Get-PackageProvider NuGet -Force
 
 # Chocolatey Provider is not ready yet. Use normal Chocolatey
-Get-PackageProvider Chocolatey -Force
-Set-PackageSource -Name chocolatey -Trusted
-Install-PackageProvider -Name ChocolateyGet
+#Get-PackageProvider Chocolatey -Force
+#Set-PackageSource -Name chocolatey -Trusted
+#Install-PackageProvider -Name ChocolateyGet
 
 ###############################################################################
 ### Chocolatey                                                                #
@@ -92,6 +120,7 @@ cinst sql-server-management-studio
 cinst atom
 cinst notepadplusplus
 cinst github
+cinst github-desktop
 cinst sourcetree
 cinst hg
 cinst javaruntime
@@ -132,7 +161,7 @@ cinst powershell-core
 
 
 ### Completing PoshGit installation if installing GH4W
-if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((which git) -eq $null)) {
+if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((get-command git) -eq $null)) {
     Write-Host ""
     Write-Host "You have installed GitHub but `git` was not found."
     Write-Host "In case GitHub is newly installed, execution has been"
@@ -202,7 +231,7 @@ if (((choco list -lr | where {$_ -like "github*"}) -ne $null) -and ((which git) 
 
 cinst atom -y
 
-$Packages = Get-Content $(Join-Path -Path $SourceDir -ChildPath "Home\.atom\package.list")
+$Packages = Get-Content $(Join-Path -Path $SourceDir -ChildPath "$Home\.atom\package.list")
 foreach ($Pack in $Packages) { apm install $Pack }
 
 #----------------------- Windows Terminal --------------------------------------------------
@@ -252,6 +281,7 @@ if (which Install-VSExtension) {
 
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
+# https://westoahu.hawaii.edu/cyber/how-to-install-kali-linux-as-an-app-in-windows-10/
 
 # Wait for key press
 Function WaitForKey {

@@ -123,3 +123,6 @@
 
 [push]
     default = simple
+[user]
+	name = Igor Frunze User
+	email = madm.pro@gmail.com
