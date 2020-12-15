@@ -1,0 +1,47 @@
+Windows Registry Editor Version 5.00
+
+; Registry file that maps the solarized palette to the 16 avaliable colors
+; in a Windows command prompt. Note, hex values in the table are RGB but byte
+; ordering of a DWORD is BGR, e.g. "ColorTable<##>"=dword:00<B><G><R>
+;
+; Solarized color table from http://ethanschoonover.com/solarized.
+;
+;| SOLARIZED | HEX     | ANSI       | TERMCOL   | cmd.exe     | PowerShell  | ColorTable | DWORD    |
+;|-----------|---------|------------|-----------|-------------|-------------|------------|----------|
+;| base03    | #0C0C0C | ESC[5;232m | brblack   | Black       | Black       | 00         | 000c0c0c |
+;| base02    | #767676 | ESC[5;243m | black     | Gray        | DarkGray    | 08         | 00767676 |
+;| base01    | #13A10E | ESC[5;34m  | brgreen   | Green       | DarkGreen   | 02         | 000ea113 |
+;| base00    | #C19C00 | ESC[5;142m | bryellow  | Yellow      | DarkYellow  | 06         | 00009cc1 |
+;| base0     | #0037DA | ESC[0;34m | brblue    | Blue        | DarkBlue    | 01         | 00da3700 |
+;| base1     | #3A96DD | ESC[0;36m | brcyan    | Aqua        | DarkCyan    | 03         | 00dd963a |
+;| base2     | #CCCCCC | ESC[0;37m | white     | White       | Gray        | 07         | 00cccccc |
+;| base3     | #F2F2F2 | ESC[1;37m | brwhite   | BrightWhite | White       | 15         | 00f2f2f2 |
+;| yellow    | #F9F1A5 | ESC[1;33m | yellow    | LightYellow | Yellow      | 14         | 00a5f1f9 |
+;| orange    | #C50F1F | ESC[0;31m | brred     | Red         | DarkRed     | 04         | 001f0fc5 |
+;| red       | #E74856 | ESC[1;31m | red       | LightRed    | Red         | 12         | 005648e7 |
+;| magenta   | #B4009E | ESC[1;35m | magenta   | LightPurple | Magenta     | 13         | 009e00b4 |
+;| violet    | #881798 | ESC[0;35m | brmagenta | Purple      | DarkMagenta | 05         | 00981788 |
+;| blue      | #3B78FF | ESC[1;34m | blue      | LightBlue   | Blue        | 09         | 00ff783b |
+;| cyan      | #61D6D6 | ESC[1;36m | cyan      | LightAqua   | Cyan        | 11         | 00d6d661 |
+;| green     | #16C60C | ESC[1;32m | green     | LightGreen  | Green       | 10         | 000cc616 |
+;
+
+
+[HKEY_CURRENT_USER\Console]
+"ColorTable00"=dword:000c0c0c
+"ColorTable01"=dword:00da3700
+"ColorTable02"=dword:000ea113
+"ColorTable03"=dword:00dd963a
+"ColorTable04"=dword:001f0fc5
+"ColorTable05"=dword:00981788
+"ColorTable06"=dword:00009cc1
+"ColorTable07"=dword:00cccccc
+"ColorTable08"=dword:00767676
+"ColorTable09"=dword:00ff783b
+"ColorTable10"=dword:000cc616
+"ColorTable11"=dword:00d6d661
+"ColorTable12"=dword:005648e7
+"ColorTable13"=dword:009e00b4
+"ColorTable14"=dword:00a5f1f9
+"ColorTable15"=dword:00f2f2f2
+"ScreenColors"=dword:00000007

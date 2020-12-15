@@ -83,9 +83,6 @@ Install-Module -Name Get-ChildItemColor -Scope CurrentUser -AllowClobber
 
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 
-#Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-
 cinst git.install -y --force
 
 #----------------------- PowerLine prompt ---------------------------------------------
